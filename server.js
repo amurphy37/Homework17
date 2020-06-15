@@ -1,7 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 
+const MONGODB_URI = process.env.MONGODB_URL || "mongodb://localhost/Workout"
 
+const options = {
+    useNewURLParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+    family: 4
+};
 
 const PORT = process.env.PORT || 3000;
 
@@ -14,10 +21,7 @@ app.use(express.static("public"));
 
 const Workout = require("./models/Workout")
 
-mongoose.connect("mongodb://localhost/workout", {
-    useNewUrlParser: true,
-    useFindAndModify: false
-});
+mongoose.connect(MONGODB_URI, options);
 
 // routes
 require("./routes/api-routes")(app)
