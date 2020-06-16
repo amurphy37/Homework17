@@ -1,4 +1,5 @@
 let mongoose = require("mongoose");
+let seeder = require("mongoose-seed")
 let db = require("../models");
 
 const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout"
@@ -10,12 +11,25 @@ const options = {
   family: 4
 };
 
-mongoose.connect(MONGODB_URI, options);
+seeder.connect(MONGODB_URI, options, function () {
+  seeder.loadModels(["./models/Workout.js"]);
 
-let workoutSeed = [
+  seeder.clearModels(["Workout"], function () {
+
+    seeder.populateModels(data, function () {
+      seeder.disconnect();
+    })
+
+  })
+});
+
+let data = [
+  {
+      "model": "Workout",
+      "documents": [
   {
     day: new Date().setDate(new Date().getDate()-10),
-    exercises: [
+      exercises: [
       {
         workoutType: "resistance",
         name: "Bicep Curl",
@@ -142,15 +156,16 @@ let workoutSeed = [
       }
     ]
   }
-];
+]
+  }]
 
-db.Workout.deleteMany({})
-  .then(() => db.Workout.collection.insertMany(workoutSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+// db.Workout.deleteMany({})
+//   .then(() => db.Workout.collection.insertMany(workoutSeed))
+//   .then(data => {
+//     console.log(data.result.n + " records inserted!");
+//     process.exit(0);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//     process.exit(1);
+//   });
