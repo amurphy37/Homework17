@@ -44,7 +44,7 @@ module.exports = function(app) {
                 console.log(err.message)
             }
 
-            res.json(success)
+            res.send(success)
         })
     })
         
