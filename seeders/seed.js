@@ -1,7 +1,7 @@
 let mongoose = require("mongoose");
 let db = require("../models");
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/workout"
+const MONGODB_URI = process.env.MONGODB_URL
 
 const options = {
   useNewURLParser: true,
