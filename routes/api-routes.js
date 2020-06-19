@@ -52,7 +52,8 @@ module.exports = function(app) {
 
     // Route for getting workouts in a specific range
     app.get("/api/workouts/range", function (req, res) {
-        Workout.find({}, function (err, result) {
+        Workout.find({}).limit(7)
+        .exec(function (err, result) {
             if (err) {
                 console.log(err);
             } else {
